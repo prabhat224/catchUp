@@ -35,6 +35,9 @@ username=""
 password=""
 location=""
 name=""
+friend_username=""
+create_name=""
+join_code=""
 
 
 
@@ -108,6 +111,60 @@ def update_location(state):
         notify(state,'error',"error")
     print(state.token)
 
+def join_group(state):
+    print("hi")
+    
+    myobj = {'unique_code':state.join_code}
+    print(myobj)
+    response = requests.post("http://127.0.0.1:8000/api/groups/join/",json=myobj,headers={'Content-Type': 'application/json',
+'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5NTgxNTYyLCJpYXQiOjE2OTkxNDk1NjIsImp0aSI6IjAwMDA0Y2QwYjY4YjQ3NWQ4MjViMTBjYTU4NDFlNDlhIiwidXNlcl9pZCI6MX0.avwZNb9ftJAIEx9Fk27nvjRP0rkaOu94hcZsz6GHr_Y'})
+    resp = response.json()
+    print(resp)
+    if (response.status_code==200):
+        notify(state,'success',"Joined")
+        
+    else:
+        
+        notify(state,'error',resp['detail'])
+    print(state.token)
+
+def create_group(state):
+    print("hi")
+    
+    myobj = {'name':state.create_name}
+    print(myobj)
+    response = requests.post("http://127.0.0.1:8000/api/groups/create/",json=myobj,headers={'Content-Type': 'application/json',
+'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5NTgxNTYyLCJpYXQiOjE2OTkxNDk1NjIsImp0aSI6IjAwMDA0Y2QwYjY4YjQ3NWQ4MjViMTBjYTU4NDFlNDlhIiwidXNlcl9pZCI6MX0.avwZNb9ftJAIEx9Fk27nvjRP0rkaOu94hcZsz6GHr_Y'})
+    resp = response.json()
+    print(resp)
+    if (response.status_code==201):
+        
+        notify(state,'success',f"created, community code={resp['unique_code']}")
+        
+        
+    else:
+        print(resp['detail'])
+        notify(state,'error',resp['detail'])
+    print(state.token)
+
+def add_friend(state):
+    print("hi")
+    fname=state.friend_username
+    print(fname)
+    url=f"http://127.0.0.1:8000/api/add_friend/{fname}/"
+    print(url)
+    print('hii')
+    response = requests.post(url=url,headers={'Content-Type': 'application/json',
+'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk5NTgxNTYyLCJpYXQiOjE2OTkxNDk1NjIsImp0aSI6IjAwMDA0Y2QwYjY4YjQ3NWQ4MjViMTBjYTU4NDFlNDlhIiwidXNlcl9pZCI6MX0.avwZNb9ftJAIEx9Fk27nvjRP0rkaOu94hcZsz6GHr_Y'})
+    resp = response.json()
+    print(resp)
+    if (response.status_code==200):
+        print("done")
+        notify(state,'success',"friend added as a friend")
+    else:
+        print(resp['detail'])
+        notify(state,'error',resp['detail'])
+    print(state.token)
 
 
 
@@ -115,7 +172,7 @@ def update_location(state):
 root_md="""
 <|layout|columns=1fr auto 1fr|class_name=container align_columns_center container-max-width|
 <|part|class_name=pt_half pb_half|
-<|Catch Up|text|class_name=|>
+<|Catch Up|text|class_name=text-weight700|>
 |>
 <|part|class_name=align_item_stretch|
 |>
@@ -224,28 +281,28 @@ home_md=Markdown("""
 
 <|card card-bg bg-secondary|
 <|layout|columns=1 1|
-<|Prabhat|text|class_name=text-left|>
+<|Hack CBS Community|text|class_name=text-left|>
 <|Location|text|class_name=color-primary text-right|>
 |>
 |>
 
 <|card card-bg bg-secondary|
 <|layout|columns=1 1|
-<|Prabhat|text|class_name=text-left|>
+<|Hack CBS Community|text|class_name=text-left|>
 <|Location|text|class_name=color-primary text-right|>
 |>
 |>
 
 <|card card-bg bg-secondary|
 <|layout|columns=1 1|
-<|Prabhat|text|class_name=text-left|>
+<|Hack CBS Community|text|class_name=text-left|>
 <|Location|text|class_name=color-primary text-right|>
 |>
 |>
 
 <|card card-bg bg-secondary|
 <|layout|columns=1 1|
-<|Prabhat|text|class_name=text-left|>
+<|Hack CBS Community|text|class_name=text-left|>
 <|Location|text|class_name=color-primary text-right|>
 |>
 |>
@@ -306,39 +363,78 @@ profile_md="""
 |>
 <|part|class_name=pt_half pb_half|
 
-<|Your All friends|text|class_name=h3 text-center|>
+<|Your All Communities|text|class_name=h3 text-center|>
 
 <|layout|columns=1 1 1|
 <|card card-bg|
-<|Rishabh|text|>
-<|Gurugram|text|>
+<|HackCBS|text|>
+<|Delhi|text|>
 |>
 <|card card-bg|
-<|Rishabh|text|>
-<|Gurugram|text|>
+<|HackCBS|text|>
+<|Delhi|text|>
 |>
 <|card card-bg|
-<|Rishabh|text|>
-<|Gurugram|text|>
+<|HackCBS|text|>
+<|Delhi|text|>
 |>
 <|card card-bg|
-<|Rishabh|text|>
-<|Gurugram|text|>
+<|HackCBS|text|>
+<|Delhi|text|>
 |>
 <|card card-bg|
-<|Rishabh|text|>
-<|Gurugram|text|>
+<|HackCBS|text|>
+<|Delhi|text|>
 |>
 <|card card-bg|
-<|Rishabh|text|>
-<|Gurugram|text|>
+<|HackCBS|text|>
+<|Delhi|text|>
+|>
+<|card card-bg|
+<|HackCBS|text|>
+<|Delhi|text|>
 |>
 |>
 
 |>
 |>
+
+<|card card-bg m2|
+
+#Add your friend username
+
+<|{friend_username}|input|label=Username|hover_text="Friend Username"|class_name=m2 align-item-center|>
+
+<|Submit|button|on_action=add_friend|>
+|>
+
+<|layout|columns=1 1|gap=4px|
+
+<|card card-bg|
+
+#Join a Group
+
+<|{join_code}|input|label=Username|hover_text="Friend Username"|class_name=m2 align-item-center|>
+
+<|Submit|button|on_action=join_group|>
+|>
+
+<|card card-bg|
+
+#Create a Group
+
+<|{create_name}|input|label=Username|hover_text="Friend Username"|class_name=m2 align-item-center|>
+
+<|Submit|button|on_action=create_group|>
+|>
+
+|>
+
 
 """
+
+
+
 chat_md=Markdown("""
 
 <|layout|columns=1 1|gap=25px|class_name=align_columns_center container-max-width|
@@ -346,19 +442,19 @@ chat_md=Markdown("""
 <|card card-bg bg-primary align_columns_center|
 #Friends
 <|card card-bg m1|
-<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+<|Friend Name|text|class_name=text-center|> <|Last Seen 2days ago|text|class_name=m4 mr-8 color-primary|>     <|Chat|button|on_action=go_home|>                  
 |>
 <|card card-bg m1|
-<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+<|Friend Name|text|class_name=text-center|> <|Last Seen 2days ago|text|class_name=m4 mr-8 color-primary|>   <|Chat|button|on_action=go_home|>                    
 |>
 <|card card-bg m1|
-<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+<|Friend Name|text|class_name=text-center|> <|Last Seen 2days ago|text|class_name=m4 mr-8 color-primary|>        <|Chat|button|on_action=go_home|>       
 |>
 <|card card-bg m1|
-<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+<|Friend Name|text|class_name=text-center|> <|Last Seen 2days ago|text|class_name=m4 mr-8 color-primary|>   <|Chat|button|on_action=go_home|> 
 |>
 <|card card-bg m1|
-<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+<|Friend Name|text|class_name=text-center|> <|Last Seen 2days ago|text|class_name   =m4 mr-8 color-primary|>   <|Chat|button|on_action=go_home|>     
 |>
 |>
                  
@@ -385,10 +481,31 @@ chat_md=Markdown("""
 
 """)
 
+communicate_md=Markdown("""
+<|card card-bg m2 p2|
+<|card card-bg m2 p2 bg-primary|
+<|layout|columns=1 1 1|
+<img src="img2.png" alt="Prabhat" width="100"/>
+##Prabhat
+<|{location}|text|>
+|>
+|>
+                        
+<|card card-bg bg-primary m2|
+
+|>
+|>
+
+""")
+
+
+
 def on_menu(state, action, info):
     page = info["args"][0]
     navigate(state, to=page)
 
+def go_home(state):
+    navigate(state, to='communicate')
 
 pages = {
     "/": root_md,
@@ -396,7 +513,8 @@ pages = {
     "Signup": page2_md,
     "Home":home_md,
     "Profile":profile_md,
-    "chat":chat_md
+    "chat":chat_md,
+    "communicate":communicate_md
 }
 
 
