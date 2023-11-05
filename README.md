@@ -1,4 +1,16 @@
-# Catchup Chat Application
+# Problem Statement
+
+Despite the prevalence of social media, relocating to new cities often leads to a loss of meaningful connections. CatchUp addresses this by prioritizing real-world interactions, notifying users about old friends. Our platform aims to rekindle and strengthen genuine connections, combating the isolation of relocation.
+
+# Solution
+
+A social media application designed for bringing together friends and community members who are separated by distance . After the the user sign up they can see the location of the friends who are in their area .
+
+# Our PPT
+
+Check the File named as catchUp.pptx in the repo
+
+# Details
 
 Catchup is a dynamic chat application built using the Taipy library in Python with a Django backend. It not only facilitates seamless communication but also integrates community meetups based on user location. Additionally, users can add new friends to their existing communities and extend invites to others.
 
@@ -67,21 +79,3 @@ Catchup is a dynamic chat application built using the Taipy library in Python wi
 5. **Invite Others**
 
    Extend invites to friends and acquaintances to join your community and participate in activities.
-
-## Contributing
-
-If you'd like to contribute to the development of Catchup, please follow these steps:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/new-feature`)
-3. Make your changes and commit them (`git commit -m 'Add new feature'`)
-4. Push to your branch (`git push origin feature/new-feature`)
-5. Create a pull request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to explore, modify, and enhance the Catchup Chat Application to suit your needs. Happy chatting!
