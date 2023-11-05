@@ -1,3 +1,13 @@
+# Problem Statement
+
+As we move to different cities, we lose touch with our friends and connections whom we can rarely afford losing. Here, we the CatchUp come in for the rescue of you and your buds.
+
+# Solution
+
+A social media application designed for bringing together friends and community members who are separated by distance . After the the user sign up they can see the location of the friends who are in their area .
+
+# Link to our ppt 
+
 # Catchup Chat Application
 
 Catchup is a dynamic chat application built using the Taipy library in Python with a Django backend. It not only facilitates seamless communication but also integrates community meetups based on user location. Additionally, users can add new friends to their existing communities and extend invites to others.
