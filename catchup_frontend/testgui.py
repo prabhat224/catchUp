@@ -26,6 +26,7 @@ from taipy.gui import Gui, navigate, notify
 import requests
 import json
 import socket
+from taipy.gui import Markdown
 
 hostname = socket.gethostname()
 IPAddr = socket.gethostbyname(hostname)
@@ -122,7 +123,7 @@ root_md="""
 <|toggle|theme|class_name=relative nolabel|>
 |>
 |>
-<|menu|label=Menu|lov={[('Login', 'Login'), ('Signup', 'Signup'),('Home', 'Home'),('Profile', 'Profile')]}|on_action=on_menu|>
+<|menu|label=Menu|lov={[('Login', 'Login'), ('Signup', 'Signup'),('Home', 'Home'),('Profile', 'Profile'),('chat', 'Chat')]}|on_action=on_menu|>
 """
 
 page1_md="""<|card card-bg|
@@ -150,7 +151,7 @@ page2_md="""
 |>
 """
 
-home_md="""
+home_md=Markdown("""
 
 
 <|Welcome, Rishabh|text|class_name=h1 text-center m4|>
@@ -177,37 +178,41 @@ home_md="""
 
 <|Your Friends In this area|text|class_name=h1 text-center m4|>
 
-<|layout|columns=1 1 1 1|columns[mobile]="1"|
+<|layout|columns=1 1 1 1 1|columns[mobile]="1"|
 
 <|card card-bg bg-secondary|
 <|layout|columns=1 1|
+<img src="img2.png" alt="Prabhat" width="100"/>
+<|card card-bg|
 <|Prabhat|text|class_name=text-left|>
-<|Location|text|class_name=color-primary text-right|>
+<|{location}|text|class_name=color-primary text-right|>
 |>
-|>
-
-<|card card-bg bg-secondary|
-<|layout|columns=1 1|
-<|Prabhat|text|class_name=text-left|>
-<|Location|text|class_name=color-primary text-right|>
 |>
 |>
 
 <|card card-bg bg-secondary|
 <|layout|columns=1 1|
+<img src="img2.png" alt="Prabhat" width="100"/>
+<|card card-bg|
 <|Prabhat|text|class_name=text-left|>
-<|Location|text|class_name=color-primary text-right|>
+<|{location}|text|class_name=color-primary text-right|>
 |>
 |>
-
+|>
+                 
 <|card card-bg bg-secondary|
 <|layout|columns=1 1|
+<img src="img2.png" alt="Prabhat" width="100"/>
+<|card card-bg|
 <|Prabhat|text|class_name=text-left|>
-<|Location|text|class_name=color-primary text-right|>
+<|{location}|text|class_name=color-primary text-right|>
+|>
 |>
 |>
 |>
 
+
+                 
 |>
 
 
@@ -247,7 +252,7 @@ home_md="""
 |>
 
 |>
-"""
+""")
 
 profile_md="""
 
@@ -334,7 +339,51 @@ profile_md="""
 |>
 
 """
+chat_md=Markdown("""
 
+<|layout|columns=1 1|gap=25px|class_name=align_columns_center container-max-width|
+
+<|card card-bg bg-primary align_columns_center|
+#Friends
+<|card card-bg m1|
+<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+|>
+<|card card-bg m1|
+<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+|>
+<|card card-bg m1|
+<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+|>
+<|card card-bg m1|
+<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+|>
+<|card card-bg m1|
+<|Friend Name|text|class_name=text-center|> <|Last Seen|text|class_name=m4 color-primary|>                      
+|>
+|>
+                 
+<|card card-bg bg-primary align_columns_center|
+#Communities
+<|card card-bg m1|
+<|Community Name|text|class_name=text-center|> <|12 Members |text|class_name=m4 color-primary|>                      
+|>
+<|card card-bg m1|
+<|Community Name|text|class_name=text-center|> <|12 Members |text|class_name=m4 color-primary|>                      
+|>
+<|card card-bg m1|
+<|Community Name|text|class_name=text-center|> <|12 Members |text|class_name=m4 color-primary|>                      
+|>
+<|card card-bg m1|
+<|Community Name|text|class_name=text-center|> <|12 Members |text|class_name=m4 color-primary|>                      
+|>
+<|card card-bg m1|
+<|Community Name|text|class_name=text-center|> <|12 Members |text|class_name=m4 color-primary|>                      
+|>
+|>
+                 
+|>
+
+""")
 
 def on_menu(state, action, info):
     page = info["args"][0]
@@ -346,7 +395,8 @@ pages = {
     "Login": page1_md,
     "Signup": page2_md,
     "Home":home_md,
-    "Profile":profile_md
+    "Profile":profile_md,
+    "chat":chat_md
 }
 
 
